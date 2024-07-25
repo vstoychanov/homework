@@ -1,15 +1,7 @@
-avarage_score_of_each_person = {}
+avarage_score = {}
 grades = [[5, 3, 3, 5, 4], [2, 2, 2, 3], [4, 5, 5, 2], [4, 4, 3], [5, 5, 5, 4, 5]]
 students = {'Johnny', 'Bilbo', 'Steve', 'Khendrik', 'Aaron'}
-average_score1 = sum(grades[0]) / len(grades[0])
-average_score2 = sum(grades[1]) / len(grades[1])
-average_score3 = sum(grades[2]) / len(grades[2])
-average_score4 = sum(grades[3]) / len(grades[3])
-average_score5 = sum(grades[4]) / len(grades[4])
-students_sort = sorted(students)
-avarage_score_of_each_person.update({students_sort[0]: average_score1,
-                                     students_sort[1]: average_score2,
-                                     students_sort[2]: average_score3,
-                                     students_sort[3]: average_score4,
-                                     students_sort[4]: average_score5})
-print(avarage_score_of_each_person)
+students = sorted(students)
+for (student, grade) in zip(students, grades):
+    avarage_score[student] = sum(grade) / len(grade)
+print(avarage_score)
