@@ -28,9 +28,9 @@ def is_contains(string, list_to_search):
             flag = False
             continue
     if flag:
-        print(True)
+        return True
     else:
-        print(False)
+        return False
 
 
 print(string_info('Capybara'))
