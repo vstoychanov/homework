@@ -9,7 +9,7 @@ class User:
     def __hash__(self):
         return hash(self.password)
 
-    def __str(self):
+    def __str__(self):
         return f'{self.nickname}, {self.age} лет'
 
     def __eq__(self, other):
