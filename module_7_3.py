@@ -20,6 +20,7 @@ class WordsFinder:
             if word in words:
                 for w in words:
                     if w == word:
+                        position = words.index(word) + 1
                         found_words = w
                         find_word[name] = found_words
         return find_word
@@ -31,7 +32,7 @@ class WordsFinder:
         for name, words in self.get_all_words().items():
             count = words.count(word)
             if count > 0:
-                count_word[name] = count + 1
+                count_word[name] = count
         return count_word
 
 
