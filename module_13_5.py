@@ -19,6 +19,10 @@ class UserState(StatesGroup):
     growth = State()
     weight = State()
 
+@dp.message_handler(commands='start')
+async def start(message):
+    await message.answer('Привет, я бот помогающий твоему здоровью', reply_markup= kb)
+
 @dp.message_handler(text = 'Информация')
 async def info(message):
     await message.answer('Это информация', reply_markup= kb)
@@ -47,11 +51,13 @@ async def send_calories(message, state):
     age = int(data['age'])
     growth = int(data['growth'])
     weight = int(data['weight'])
-
     calories = 10 * weight + 6.25 * growth - 5 * age - 161
     await message.answer(f'Ваша суточная норма калорий: {calories:.2f}')
     await state.finish()
 
+@dp.message_handler()
+async def all_text(message):
+    await message.answer('Введите команду /start')
 
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
