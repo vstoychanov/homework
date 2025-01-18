@@ -1,12 +1,12 @@
-from itertools import product
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.dispatcher import FSMContext
+from crud_functions import get_all_products
 
-api = ''
+api = '8117805314:AAHoef2Rs_1HbI5dUaNZxqk78fQAd7FcmT0'
 bot = Bot(token = api)
 dp = Dispatcher(bot, storage=MemoryStorage())
 
@@ -35,6 +35,7 @@ images = [
     "4.png"
 ]
 
+product = get_all_products()
 
 @dp.message_handler(commands='start')
 async def starter(message):
@@ -42,12 +43,13 @@ async def starter(message):
 
 @dp.message_handler(text='Купить')
 async def get_buying_list(message):
-    for index, i in enumerate(images):
-        with open(f'{i}', "rb") as img:
-            await message.answer_photo(img, f'Название: Product{index + 1} |'
-                                            f'Описание: описание {index + 1} |'
-                                            f'Цена: {(index + 1) * 100} '
-                                       )
+    product_list = get_all_products()
+    if product_list:
+        for product, img_path in zip(product_list, images):
+            title, description, price = product[1], product[2], product[3]
+            product_info = f'Навзвание: {title} | Описание: {description} | Цена: {price}'
+            with open(img_path, 'rb') as img:
+                await message.answer_photo(img, caption=product_info)
     await message.answer('Выберите пролукт для покупки', reply_markup= kb)
 
 @dp.callback_query_handler(text = 'product_buying')

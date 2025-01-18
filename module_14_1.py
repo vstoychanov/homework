@@ -30,20 +30,12 @@ cursor.executemany('INSERT INTO Users (username, email, age, balance) VALUES (?,
 cursor.execute('UPDATE Users SET balance = 500 WHERE id % 2 = 1')
 cursor.execute('DELETE FROM Users WHERE id % 3 = 1')
 cursor.execute('SELECT username, email, age, balance FROM Users WHERE age !=60')
-cursor.execute('DELETE FROM Users WHERE id = 6')
-cursor.execute('SELECT COUNT(*) FROM Users')
-count_ = cursor.fetchone()[0]
-print(count_)
-cursor.execute('SELECT SUM(balance) FROM Users')
-sum_ = cursor.fetchone()[0]
-print(sum_)
-cursor.execute('SELECT AVG(balance) FROM Users')
-avg_balance = cursor.fetchone()[0]
-print(avg_balance)
-
+results = cursor.fetchall()
+output = '\n'.join(f'Имя: {row[0]} | Почта:{row[1]} | Возраст:{row[2]} | Баланс:{row[3]}' for row in results)
 
 
 
 
 connection.commit()
 connection.close()
+print(output)
